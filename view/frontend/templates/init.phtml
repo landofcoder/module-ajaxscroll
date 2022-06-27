@@ -1,13 +1,13 @@
-<?php  
-$helper = $this->helper('Lof\AjaxScroll\Helper\Data'); 
-$productListMode = $block->getProductListMode(); 
-$enable = $block->isEnable(); 
+<?php
+$helper = $this->helper('Lof\AjaxScroll\Helper\Data');
+$productListMode = $block->getProductListMode();
+$enable = $block->isEnable();
 $delay = $helper->getConfig('lofajaxscroll/instances/delay');
 $delay = $delay?(int)$delay:600;
-if($helper->isEnabled() && $enable) { ?>  
+if($helper->isEnabled() && $enable) { ?>
 <script>
 	require(['jquery',
-		'Lof_AjaxScroll/js/script'	
+		'Lof_AjaxScroll/js/script'
 		], function ($) {
 		$( document ).ready(function() {
   // Handler for .ready() called.
@@ -15,7 +15,7 @@ if($helper->isEnabled() && $enable) { ?>
 			windowLoadedFlag = false;
 			window.onload = function () {
 				windowLoadedFlag = true;
-			};   
+			};
 			var jQueryWaiter = function () {
 				var functions = [];
 				var timer = function() {
@@ -41,17 +41,17 @@ if($helper->isEnabled() && $enable) { ?>
 
 			window.SgyIAS = {
 				debug: false,
-				_log: function(object) { 
-					//console.log(object); 
+				_log: function(object) {
+					//console.log(object);
 				},
-				init: function(){ 
+				init: function(){
 					jQuery(function($) {
 						var config = {
 							item: '<?php echo $productListMode == 'grid' ? $helper->getConfig('lofajaxscroll/selectors/grid_mode') : $helper->getConfig('lofajaxscroll/selectors/list_mode') ?>',
 							container : '<?php echo $helper->getConfig('lofajaxscroll/selectors/content') ?>',
 							next: '<?php echo $helper->getConfig('lofajaxscroll/selectors/next') ?>',
 							pagination: '<?php echo $helper->getConfig('lofajaxscroll/selectors/pagination') ?>',
-							parameter: '<?php echo $helper->getConfig('lofajaxscroll/instances/enable_parameter') ?>',
+							parameter: <?php echo $helper->getConfig('lofajaxscroll/instances/enable_parameter') ? 'true' : 'false' ?>,
 							delay: <?php echo $delay; ?>,
 							negativeMargin: <?php echo (int) $helper->getConfig('lofajaxscroll/design/buffer') ?>,
 							history: {
@@ -66,7 +66,7 @@ if($helper->isEnabled() && $enable) { ?>
 								src: '<?php echo $block->getLoaderImage(); ?>',
 							<?php endif; ?>
 							html: '<div class="ias-spinner" style="text-align: center;"><img style="display:inline" src="{src}"/> <?php echo $helper->jsQuoteEscape(__($helper->getConfigData('lofajaxscroll/design/loading_text'))); ?></div>'
-						},  
+						},
 						trigger: {
 							text: '<?php echo $helper->jsQuoteEscape(__($helper->getConfigData('lofajaxscroll/design/load_more_text'))) ?>',
 							html: '<div class="ias-trigger ias-trigger-next" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
@@ -117,8 +117,8 @@ if($helper->isEnabled() && $enable) { ?>
 									bind: "event",
 									delay: 0
 								});
-							} 
-						}); 
+							}
+						});
 						window.ias.on('noneLeft', function(){
 							SgyIAS._log({eventName: 'noneLeft'});
 						});
